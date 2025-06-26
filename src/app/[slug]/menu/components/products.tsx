@@ -1,9 +1,7 @@
 import { Product } from "@prisma/client";
-import { Currency } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
-
 
 interface ProductsProps {
   products: Product[];
