@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConsumptionMethod } from "@prisma/client";
-import { loadStripe } from "@stripe/stripe-js";
 import { Loader2Icon } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
@@ -32,9 +31,9 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { createOrder } from "../actions/create-order";
-import { createStripeCheckout } from "../actions/create-stripe-checkout";
 import { CartContext } from "../contexts/cart";
 import { isValidCpf } from "../helpers/cpf";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -85,26 +84,14 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         products,
         slug,
       });
-      const { sessionId } = await createStripeCheckout({
-        products,
-        orderId: order.id,
-        slug,
-        consumptionMethod,
-        cpf: data.cpf,
-      });
-      if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) return;
-      const stripe = await loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
-      );
-      stripe?.redirectToCheckout({
-        sessionId: sessionId,
-      });
+      onOpenChange(false);
+      toast.success("Pedido finalizado com sucesso!")
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }; 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerTrigger asChild></DrawerTrigger>

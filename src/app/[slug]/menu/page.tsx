@@ -1,7 +1,9 @@
-import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import RestaurantHeader from "./components/header";
+
+import { db } from "@/lib/prisma";
+
 import RestaurantCategories from "./components/categories";
+import RestaurantHeader from "./components/header";
 
 interface RestaurantMenuPageProps {
   params: Promise<{ slug: string }>;
@@ -12,7 +14,7 @@ const isConsumptionMethodValid = (consumptionMethod: string) => {
   return ["DINE_IN", "TAKEAWAY"].includes(consumptionMethod.toUpperCase());
 };
 
-const restaurantMenuPage = async ({
+const RestaurantMenuPage = async ({
   params,
   searchParams,
 }: RestaurantMenuPageProps) => {
@@ -25,17 +27,13 @@ const restaurantMenuPage = async ({
     where: { slug },
     include: {
       menuCategories: {
-        include: {
-          products: true,
-        },
+        include: { products: true },
       },
     },
   });
-
   if (!restaurant) {
     return notFound();
   }
-
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} />
@@ -44,4 +42,4 @@ const restaurantMenuPage = async ({
   );
 };
 
-export default restaurantMenuPage;
+export default RestaurantMenuPage;
