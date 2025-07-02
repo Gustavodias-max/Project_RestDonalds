@@ -37,6 +37,7 @@ export const createOrder = async (input: CreateOrderInput) => {
     quantity: product.quantity,
     price: productsWithPrices.find((p) => p.id === product.id)!.price,
   }));
+
   const order = await db.order.create({
     data: {
       status: "PENDING",
