@@ -77,7 +77,7 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         "consumptionMethod",
       ) as ConsumptionMethod;
 
-      const order = await createOrder({
+      await createOrder({
         consumptionMethod,
         customerCpf: data.cpf,
         customerName: data.name,
