@@ -85,13 +85,13 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         slug,
       });
       onOpenChange(false);
-      toast.success("Pedido finalizado com sucesso!")
+      toast.success("Pedido finalizado com sucesso!");
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }; 
+  };
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerTrigger asChild></DrawerTrigger>
