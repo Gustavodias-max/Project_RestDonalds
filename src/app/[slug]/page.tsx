@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 import { db } from "@/lib/prisma";
+
 import ConsumptionMethodOption from "./components/consumption-method-option";
-import { notFound } from "next/navigation";
 
 interface RestaurantPageProps {
   params: Promise<{ slug: string }>;
